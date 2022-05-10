@@ -18,9 +18,12 @@
 </template>
 
 <script lang="ts">
+import { defineComponent } from "vue";
+import { TipoNotificacao } from "@/interfaces/INotificacao";
 import { useStore } from "@/store";
 import { ADICIONA_PROJETO, ALTERA_PROJETO } from "@/store/tipo-mutacoes";
-import { defineComponent } from "vue";
+// import { notificacaoMixin } from "@/mixins/notificar";
+import useNotificador from "@/hooks/notificador";
 
 export default defineComponent({
   name: "FormularioTrack",
@@ -29,6 +32,7 @@ export default defineComponent({
       type: String,
     },
   },
+  // mixins: [notificacaoMixin],
   mounted() {
     if (this.id) {
       const projeto = this.store.state.projetos.find(
@@ -53,14 +57,20 @@ export default defineComponent({
         this.store.commit(ADICIONA_PROJETO, this.nomeDoProjeto);
       }
       this.nomeDoProjeto = "";
-
+      this.notificar(
+        TipoNotificacao.SUCESSO,
+        "Sucesso!",
+        "Projeto cadastrado com sucesso!"
+      );
       this.$router.push("/projetostrack");
     },
   },
   setup() {
     const store = useStore();
+    const { notificar } = useNotificador();
     return {
       store,
+      notificar,
     };
   },
 });

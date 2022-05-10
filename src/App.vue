@@ -8,6 +8,7 @@
     </div>
 
     <div class="column is-three-quarter conteudo">
+      <NotificacoesSistema />
       <router-view></router-view>
     </div>
   </main>
@@ -16,11 +17,13 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import BarraLateral from "./components/BarraLateral.vue";
+import NotificacoesSistema from "./components/NotificacoesSistema.vue";
 
 export default defineComponent({
   name: "App",
   components: {
     BarraLateral,
+    NotificacoesSistema,
   },
 
   data() {
